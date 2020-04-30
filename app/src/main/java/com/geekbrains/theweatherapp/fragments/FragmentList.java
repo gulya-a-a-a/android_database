@@ -220,11 +220,11 @@ public class FragmentList extends Fragment {
     }
 
     private void initCityList(View view) {
-        List<CityEntity> savedCities = mCitiesRepo.getCities();
-        for (int i = 0; i < savedCities.size(); i++) {
-            City cityData = new City(savedCities.get(i).getCityName());
-            addCityTextView(cityData, mCityListlayout, i);
-        }
+//        List<CityEntity> savedCities = mCitiesRepo.getCities();
+//        for (int i = 0; i < savedCities.size(); i++) {
+//            City cityData = new City(savedCities.get(i).getCityName());
+//            addCityTextView(cityData, mCityListlayout, i);
+//        }
     }
 
     private void showTheWeather(Parcel parcel) {
