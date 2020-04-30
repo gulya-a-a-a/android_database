@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initViews();
         initDrawer();
-        mCitiesRepo = new CitiesRepo(App.getInstance().getCityDao());
+//        mCitiesRepo = new CitiesRepo(App.getInstance().getCityDao());
 //        List<CityEntity> cities = mCitiesRepo.getCities();
     }
 

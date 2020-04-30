@@ -1,5 +1,6 @@
 package com.geekbrains.theweatherapp.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -68,9 +69,10 @@ public class FragmentList extends Fragment {
 
         mCc = CityStorage.getInstance();
 
+        mCitiesRepo = new CitiesRepo(App.getInstance().getCityDao());
+
         configControls(view);
         initRetrofit();
-        initCityList(view);
     }
 
     private void initRetrofit() {
@@ -86,8 +88,6 @@ public class FragmentList extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mCitiesRepo = ((MainActivity) getActivity()).getCitiesRepo();
 
         if (savedInstanceState != null) {
             mCurrentCityData = (Parcel) savedInstanceState.getSerializable(PARCEL_TAG);
@@ -219,14 +219,6 @@ public class FragmentList extends Fragment {
         });
     }
 
-    private void initCityList(View view) {
-//        List<CityEntity> savedCities = mCitiesRepo.getCities();
-//        for (int i = 0; i < savedCities.size(); i++) {
-//            City cityData = new City(savedCities.get(i).getCityName());
-//            addCityTextView(cityData, mCityListlayout, i);
-//        }
-    }
-
     private void showTheWeather(Parcel parcel) {
         FragmentWeather weather = FragmentWeather.create(parcel);
         getParentFragmentManager()
@@ -236,4 +228,5 @@ public class FragmentList extends Fragment {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
+
 }

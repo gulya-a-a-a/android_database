@@ -1,11 +1,12 @@
 package com.geekbrains.theweatherapp.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = {@Index(value = {CityEntity.CITY_NAME})})
+@Entity(indices = {@Index(value = {CityEntity.CITY_NAME})}, tableName = "cities")
 public class CityEntity {
     public final static String ID = "id";
     public final static String CITY_NAME = "name";
