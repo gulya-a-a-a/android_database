@@ -2,7 +2,6 @@ package com.geekbrains.theweatherapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -32,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initViews();
         initDrawer();
     }
-
-
 
     private void initViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);

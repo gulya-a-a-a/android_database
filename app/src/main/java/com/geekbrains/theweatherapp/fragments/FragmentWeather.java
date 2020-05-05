@@ -3,6 +3,7 @@ package com.geekbrains.theweatherapp.fragments;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -70,20 +71,21 @@ public class FragmentWeather extends Fragment implements Target {
             mPressureTV.setText(String.format("%s hPa", String.valueOf(wths.get(0).getPressure())));
             mWindSpeedTV.setText(String.format("%s mps", String.valueOf(wths.get(0).getWindSpeed())));
 
-            int orientation = LinearLayoutManager.HORIZONTAL;
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                orientation = LinearLayoutManager.VERTICAL;
-            }
-
-            mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
-                    orientation, false));
-
+            configRecycler();
             updateForecast(wths);
-
             changeBackground(wths.get(0));
         }
 
         return layout;
+    }
+
+    private void configRecycler() {
+        int orientation = LinearLayoutManager.HORIZONTAL;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            orientation = LinearLayoutManager.VERTICAL;
+        }
+        mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
+                orientation, false));
     }
 
     private void changeBackground(Weather weather) {
