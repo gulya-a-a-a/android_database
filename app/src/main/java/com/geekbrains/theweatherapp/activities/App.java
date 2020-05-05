@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.geekbrains.theweatherapp.dao.CityDao;
 import com.geekbrains.theweatherapp.database.CityDatabase;
+import com.geekbrains.theweatherapp.database.Migration_1_2;
 
 public class App extends Application {
 
@@ -26,7 +27,7 @@ public class App extends Application {
                 getApplicationContext(),
                 CityDatabase.class,
                 "city_database")
-                .allowMainThreadQueries()
+                .addMigrations(new Migration_1_2())
                 .build();
     }
 

@@ -39,5 +39,7 @@
     <string name="select_city">Select city</string>
     <string name="communication">Communication</string>
     <string name="clear">Clear</string>
-    <string name="sort">Sort</string>
+    <string name="sort_asc">Sort ↑</string>
+    <string name="temp_format" translatable="false">+#;-#</string>
+    <string name="sort_desc">Sort ↓</string>
 </resources>

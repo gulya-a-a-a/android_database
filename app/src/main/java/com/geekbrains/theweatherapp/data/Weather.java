@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Weather implements Serializable {
     @SerializedName("dt")
     @Expose
-    private long timestamp;
+    private long mTimestamp;
 
     @SerializedName("main")
     @Expose
@@ -55,18 +55,24 @@ public class Weather implements Serializable {
         return mDrawableID;
     }
 
-    public void setDrawableID(int weatherCode) {
+    public static int getDrawableFromCode(int weatherCode) {
+        int drawableID = R.drawable.sunny;
         if (weatherCode < 300) {
-            mDrawableID = R.drawable.storm;
+            drawableID = R.drawable.storm;
         } else if (weatherCode < 600) {
-            mDrawableID = R.drawable.rain;
+            drawableID = R.drawable.rain;
         } else if (weatherCode < 700) {
-            mDrawableID = R.drawable.snow;
+            drawableID = R.drawable.snow;
         } else if (weatherCode == 800) {
-            mDrawableID = R.drawable.sunny;
+            drawableID = R.drawable.sunny;
         } else {
-            mDrawableID = R.drawable.cloudy;
+            drawableID = R.drawable.cloudy;
         }
+        return drawableID;
+    }
+
+    public void setDrawableID(int weatherCode) {
+        mDrawableID = getDrawableFromCode(weatherCode);
     }
 
     public void setTemp(float temp) {
@@ -95,5 +101,13 @@ public class Weather implements Serializable {
 
     public void setAdditionalWeatherData(AdditionalWeatherData[] additionalWeatherData) {
         mAdditionalWeatherData = additionalWeatherData;
+    }
+
+    public long getTimestamp() {
+        return mTimestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        mTimestamp = timestamp;
     }
 }

@@ -30,4 +30,9 @@
     <string name="search">Поиск</string>
     <string name="feedback_form">Обратная связь</string>
     <string name="share">Поделиться</string>
+    <string name="select_city">Выберите город</string>
+    <string name="communication">Связь</string>
+    <string name="clear">Очистить</string>
+    <string name="sort_asc">Отсортировать ↑</string>
+    <string name="sort_desc" translatable="false">Отсортировать ↓</string>
 </resources>

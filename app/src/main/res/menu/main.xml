@@ -15,8 +15,13 @@
         android:title="@string/clear" />
 
     <item
-        android:id="@+id/sort_list"
+        android:id="@+id/sort_list_asc"
         android:orderInCategory="3"
-        android:title="@string/sort" />
+        android:title="@string/sort_asc" />
+
+    <item
+        android:id="@+id/sort_list_desc"
+        android:orderInCategory="3"
+        android:title="@string/sort_desc" />
 
 </menu>

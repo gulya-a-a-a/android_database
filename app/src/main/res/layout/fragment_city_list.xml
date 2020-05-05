@@ -16,21 +16,20 @@
             android:id="@+id/city_name_TI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:imeOptions="actionGo"
+            android:inputType="text"
             android:textSize="20sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/city_list"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/city_list_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="wrap_content" />
     </ScrollView>
 
 </LinearLayout>
