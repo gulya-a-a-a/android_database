@@ -33,5 +33,6 @@
     <string name="select_city">Выберите город</string>
     <string name="communication">Связь</string>
     <string name="clear">Очистить</string>
-    <string name="sort">Отсортировать</string>
+    <string name="sort_asc">Отсортировать ↑</string>
+    <string name="sort_desc" translatable="false">Отсортировать ↓</string>
 </resources>

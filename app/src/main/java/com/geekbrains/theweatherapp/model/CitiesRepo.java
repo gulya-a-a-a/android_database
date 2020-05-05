@@ -2,14 +2,21 @@ package com.geekbrains.theweatherapp.model;
 
 import android.os.AsyncTask;
 
+import androidx.core.util.Pair;
+
 import com.geekbrains.theweatherapp.dao.CityDao;
 import com.geekbrains.theweatherapp.data.City;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class CitiesRepo {
+
+    public enum SortOrder {
+        asc, desc
+    }
 
     private final CityDao mCitiesDao;
     private InsertTask mInsertTask;
@@ -37,7 +44,7 @@ public class CitiesRepo {
     }
 
     public long getCountOfCities() {
-        return mCitiesDao.getCountCities();
+        return mEntities.size();
     }
 
     public void addCity(CityEntity city) {
@@ -55,7 +62,6 @@ public class CitiesRepo {
     }
 
     private void asyncUpdate(CityEntity newEntity) {
-
         UpdateTask ut = new UpdateTask(mCitiesDao);
         ut.delegate = this;
         ut.execute(newEntity);
@@ -93,6 +99,12 @@ public class CitiesRepo {
         return cityEntity;
     }
 
+    public void sortCities(SortOrder order) {
+        SortTask st = new SortTask(mCitiesDao);
+        st.delegate = this;
+        st.execute(order);
+    }
+
     private void asyncFinished(List<CityEntity> cities) {
         mEntities = cities;
         mCitiesRepoListener.onCitiesListChanged(mEntities);
@@ -102,6 +114,7 @@ public class CitiesRepo {
         mCitiesRepoListener = citiesRepoListener;
         mCitiesRepoListener.onCitiesListChanged(mEntities);
     }
+
 
     private static class SelectAllTask extends AsyncTask<Void, Void, List<CityEntity>> {
 
@@ -182,4 +195,30 @@ public class CitiesRepo {
             return mCityDao.getCityByName(strings[0]);
         }
     }
+
+    private static class SortTask extends AsyncTask<SortOrder, Void, List<CityEntity>> {
+
+        CityDao mCityDao;
+        private CitiesRepo delegate = null;
+
+        @Override
+        protected List<CityEntity> doInBackground(SortOrder... sortOrders) {
+            if (sortOrders[0] == SortOrder.asc) {
+                return mCityDao.getAscSortedCities();
+            } else {
+                return mCityDao.getDescSortedCities();
+            }
+        }
+
+        SortTask(CityDao dao) {
+            mCityDao = dao;
+        }
+
+        @Override
+        protected void onPostExecute(List<CityEntity> cityEntities) {
+            super.onPostExecute(cityEntities);
+            delegate.asyncFinished(cityEntities);
+        }
+    }
+
 }

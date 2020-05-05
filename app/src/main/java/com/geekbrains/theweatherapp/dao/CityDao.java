@@ -38,4 +38,9 @@ public interface CityDao {
     @Query("SELECT COUNT() FROM cities")
     long getCountCities();
 
+    @Query("SELECT * FROM cities ORDER BY name ASC")
+    List<CityEntity> getAscSortedCities();
+
+    @Query("SELECT * FROM cities ORDER BY name DESC")
+    List<CityEntity> getDescSortedCities();
 }

@@ -1,9 +1,12 @@
 package com.geekbrains.theweatherapp.fragments;
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -49,7 +52,6 @@ public class FragmentWeather extends Fragment implements Target {
                              @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_weather, container, false);
 
-
         findControls(layout);
         configServiceData();
 
@@ -67,8 +69,14 @@ public class FragmentWeather extends Fragment implements Target {
 
             mPressureTV.setText(String.format("%s hPa", String.valueOf(wths.get(0).getPressure())));
             mWindSpeedTV.setText(String.format("%s mps", String.valueOf(wths.get(0).getWindSpeed())));
+
+            int orientation = LinearLayoutManager.HORIZONTAL;
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                orientation = LinearLayoutManager.VERTICAL;
+            }
+
             mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
-                    LinearLayoutManager.HORIZONTAL, false));
+                    orientation, false));
 
             updateForecast(wths);
 
@@ -158,17 +166,21 @@ public class FragmentWeather extends Fragment implements Target {
     private class ForecastHolder extends RecyclerView.ViewHolder {
 
         private TextView mTempTV, mDayTV;
+        private ImageView mImageView;
 
         ForecastHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_forecast, parent, false));
 
             mTempTV = itemView.findViewById(R.id.forecast_temp);
             mDayTV = itemView.findViewById(R.id.forecast_day);
+            mImageView = itemView.findViewById(R.id.forecast_image);
         }
 
         void bind(List<Weather> weathers, final int position) {
-            setWeatherData(mTempTV, weathers.get(position));
+            Weather w = weathers.get(position);
+            mTempTV.setText(String.format("%s℃", mTempFormat.format(w.getTemp())));
             mDayTV.setText(getWeekDay(position));
+            mImageView.setImageResource(w.getDrawableID());
         }
 
         private String getWeekDay(final int position) {

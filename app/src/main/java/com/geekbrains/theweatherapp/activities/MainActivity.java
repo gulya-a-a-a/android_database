@@ -33,13 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initDrawer();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem searchItem = menu.findItem(R.id.search_item);
-        searchItem.setVisible(false);
-        return true;
-    }
+
 
     private void initViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);

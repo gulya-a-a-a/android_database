@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -101,6 +102,9 @@ public class FragmentList extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_item);
+        searchItem.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -109,7 +113,11 @@ public class FragmentList extends Fragment {
         switch (item.getItemId()) {
             case R.id.clear_list:
                 return true;
-            case R.id.sort_list:
+            case R.id.sort_list_asc:
+                mCitiesRepo.sortCities(CitiesRepo.SortOrder.asc);
+                return true;
+            case R.id.sort_list_desc:
+                mCitiesRepo.sortCities(CitiesRepo.SortOrder.desc);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -228,10 +236,10 @@ public class FragmentList extends Fragment {
     }
 
 
-
     private class CityListHolder extends RecyclerView.ViewHolder {
         private TextView mCityNameTV, mDateTV, mCityTempTV;
         private SimpleDateFormat mSimpleDateFormat;
+        private ImageView mImageView;
 
         CityListHolder(LayoutInflater inflater, final ViewGroup parent) {
             super(inflater.inflate(R.layout.list_city_item, parent, false));
@@ -246,8 +254,10 @@ public class FragmentList extends Fragment {
             mCityNameTV = itemView.findViewById(R.id.city_list_name);
             mDateTV = itemView.findViewById(R.id.city_list_date);
             mCityTempTV = itemView.findViewById(R.id.city_list_temp);
+            mImageView = itemView.findViewById(R.id.city_list_img);
 
             mSimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+
         }
 
         void bind(CityEntity city) {
@@ -256,6 +266,7 @@ public class FragmentList extends Fragment {
                     mSimpleDateFormat.format(city.getEntityDate())
             ));
             mCityTempTV.setText(String.format("%s℃", mTempFormat.format(city.getTemp())));
+            mImageView.setImageResource(Weather.getDrawableFromCode(city.getCode()));
         }
     }
 
@@ -277,6 +288,7 @@ public class FragmentList extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull CityListHolder holder, int position) {
             holder.bind(mCities.get(position));
+            holder.itemView.setSelected(true);
         }
 
         @Override
