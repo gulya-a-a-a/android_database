@@ -16,20 +16,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.geekbrains.theweatherapp.R;
-import com.geekbrains.theweatherapp.model.CitiesRepo;
-import com.geekbrains.theweatherapp.model.CityEntity;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Currency;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout mDrawerLayout;
     private NavController mNavController;
-
-    private CitiesRepo mCitiesRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initViews();
         initDrawer();
-//        mCitiesRepo = new CitiesRepo(App.getInstance().getCityDao());
-//        List<CityEntity> cities = mCitiesRepo.getCities();
     }
 
     @Override
@@ -68,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupWithNavController(navigationView, mNavController);
 
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -115,9 +104,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return res;
-    }
-
-    public CitiesRepo getCitiesRepo() {
-        return mCitiesRepo;
     }
 }

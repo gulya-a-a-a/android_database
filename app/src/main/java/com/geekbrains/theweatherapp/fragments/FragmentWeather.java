@@ -1,20 +1,14 @@
 package com.geekbrains.theweatherapp.fragments;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,41 +27,35 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import static com.geekbrains.theweatherapp.service.Parcel.PARCEL_TAG;
 
 public class FragmentWeather extends Fragment implements Target {
 
     private TextView mCityNameTV, mTempValue, mWindSpeedTV, mPressureTV;
-    private LinearLayout mWindSpeedLayout, mPressureLayout;
     private Button mInfoButton;
     private String mSearchUrl;
-    private View mLayout;
     private ImageView mBackgroundImage;
 
     private DecimalFormat mTempFormat;
 
     private RecyclerView mForecastRecyclerView;
 
-    public static final int CITY_SELECTION_REQ_CODE = 0x6161;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mLayout = inflater.inflate(R.layout.fragment_weather, container, false);
+        View layout = inflater.inflate(R.layout.fragment_weather, container, false);
 
 
-        findControls(mLayout);
+        findControls(layout);
         configServiceData();
 
         Parcel parcel = getParcel();
         if (parcel == null) {
-            return mLayout;
+            return layout;
         }
 
         City city = parcel.getCity();
@@ -87,7 +75,7 @@ public class FragmentWeather extends Fragment implements Target {
             changeBackground(wths.get(0));
         }
 
-        return mLayout;
+        return layout;
     }
 
     private void changeBackground(Weather weather) {
@@ -141,31 +129,17 @@ public class FragmentWeather extends Fragment implements Target {
 
     private void configServiceData() {
         mSearchUrl = getString(R.string.wiki_search_url);
-        mTempFormat = new DecimalFormat("+#;-#");
+        mTempFormat = new DecimalFormat(getResources().getString(R.string.temp_format));
     }
 
     private void findControls(View layout) {
         mCityNameTV = layout.findViewById(R.id.city_name);
-        mWindSpeedLayout = layout.findViewById(R.id.wind_speed_layout);
-        mPressureLayout = layout.findViewById(R.id.pressure_layout);
         mInfoButton = layout.findViewById(R.id.info_button);
         mTempValue = layout.findViewById(R.id.temp_value);
         mForecastRecyclerView = layout.findViewById(R.id.forecast_list);
         mWindSpeedTV = layout.findViewById(R.id.wind_speed_tv);
         mPressureTV = layout.findViewById(R.id.pressure_tv);
         mBackgroundImage = layout.findViewById(R.id.background_image);
-    }
-
-    private void setInfoButtonListener() {
-        mInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse(mSearchUrl + mCityNameTV.getText().toString());
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(uri);
-                startActivity(browserIntent);
-            }
-        });
     }
 
     @Override
@@ -175,12 +149,10 @@ public class FragmentWeather extends Fragment implements Target {
 
     @Override
     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
     }
 
     @Override
     public void onPrepareLoad(Drawable placeHolderDrawable) {
-
     }
 
     private class ForecastHolder extends RecyclerView.ViewHolder {

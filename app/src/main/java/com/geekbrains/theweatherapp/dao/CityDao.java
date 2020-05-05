@@ -29,6 +29,9 @@ public interface CityDao {
     @Query("SELECT * FROM cities WHERE id = :id")
     CityEntity getCityById(long id);
 
+    @Query("SELECT * FROM cities WHERE name = :name")
+    List<CityEntity> getCityByName(String name);
+
     @Query("SELECT * FROM cities")
     List<CityEntity> getAllCities();
 

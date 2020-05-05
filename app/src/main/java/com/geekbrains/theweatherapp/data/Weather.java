@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Weather implements Serializable {
     @SerializedName("dt")
     @Expose
-    private long timestamp;
+    private long mTimestamp;
 
     @SerializedName("main")
     @Expose
@@ -95,5 +95,13 @@ public class Weather implements Serializable {
 
     public void setAdditionalWeatherData(AdditionalWeatherData[] additionalWeatherData) {
         mAdditionalWeatherData = additionalWeatherData;
+    }
+
+    public long getTimestamp() {
+        return mTimestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        mTimestamp = timestamp;
     }
 }
